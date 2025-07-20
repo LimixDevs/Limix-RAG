@@ -1,0 +1,8 @@
+faiss-cpu
+dotenv
+langchain_huggingface
+langchain_groq
+sentence-transformers
+fastapi
+uvicorn
+pydantic
