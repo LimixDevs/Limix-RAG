@@ -52,7 +52,7 @@ metadata = safe_load_json(
 # EMBEDDING MODEL
 # --------------------------------------------------------------------
 embedding_model = HuggingFaceEmbeddings(
-    model_name="sentence-transformers/all-mpnet-base-v2"
+    model_name="sentence-transformers/all-MiniLM-L12-v2"
 )
 
 
@@ -183,29 +183,3 @@ def detect_vulnerabilities(input_code: str) -> str:
             chunks.append(chunk.content)
 
     return "".join(chunks).strip()
-
-
-# # --------------------------------------------------------------------
-# # MAIN LOOP
-# # --------------------------------------------------------------------
-# if __name__ == "__main__":
-#     query = input(
-#         "Press c or C for asking a question or completing partial code. "
-#         "Press v or V for detecting vulnerabilities in code. "
-#     )
-#     while True:
-#         if query in ["c", "C"]:
-#             prompt = input("Enter question or partial code: ")
-#             chat_with_model(prompt)
-#         elif query in ["v", "V"]:
-#             prompt = input("Enter the code you want to audit: ")
-#             detect_vulnerabilities(prompt)
-#         else:
-#             print(
-#                 "Invalid input. Please enter 'c' or 'C' for code queries or 'v' or 'V' for vulnerability detection."
-#             )
-#         query = input(
-#             "Press c or C for asking a question or completing partial code. "
-#             "Press v or V for detecting vulnerabilities in code. "
-#         )
-#         print("\n")
