@@ -52,7 +52,7 @@ metadata = safe_load_json(
 # EMBEDDING MODEL
 # --------------------------------------------------------------------
 embedding_model = HuggingFaceEmbeddings(
-    model_name="sentence-transformers/all-mpnet-base-v2"
+    model_name="sentence-transformers/all-MiniLM-L12-v2"
 )
 
 
