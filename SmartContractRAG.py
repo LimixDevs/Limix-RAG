@@ -55,25 +55,36 @@ embedding_model = HuggingFaceEmbeddings(
     model_name="sentence-transformers/all-MiniLM-L12-v2"
 )
 
+# Get embedding dimension dynamically
+sample_vector = np.array(embedding_model.embed_query("test"), dtype=np.float32)
+embedding_dim = sample_vector.shape[0]
+
 
 # --------------------------------------------------------------------
 # FAISS INDEX LOADING WITH FALLBACK
 # --------------------------------------------------------------------
-def load_faiss_index(path: str, dim: int = 768):
+def load_faiss_index(path: str, dim: int):
     if os.path.exists(path):
-        return faiss.read_index(path)
+        index = faiss.read_index(path)
+        if index.d != dim:
+            print(
+                f"Embedding dimension mismatch: {dim} != FAISS index dim {index.d}. Rebuilding index."
+            )
+            return faiss.IndexFlatL2(dim)
+        return index
     else:
         print(f"Warning: FAISS index {path} not found. Using empty index.")
         return faiss.IndexFlatL2(dim)
 
 
-code_index = load_faiss_index("solana_code_faiss.index")
-vulnerabilities_index = load_faiss_index("vulnerabilities.index")
+code_index = load_faiss_index("solana_code_faiss.index", dim=embedding_dim)
+vulnerabilities_index = load_faiss_index("vulnerabilities.index", dim=embedding_dim)
+
 
 # --------------------------------------------------------------------
 # GROQ MODEL
 # --------------------------------------------------------------------
-groq_api_key = os.getenv("GROQ_API_KEY")
+groq_api_key = "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"
 if not groq_api_key:
     raise RuntimeError("Missing GROQ_API_KEY (or GROQ_KEY) environment variable.")
 
