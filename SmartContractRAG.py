@@ -172,12 +172,9 @@ def detect_vulnerabilities(input_code: str) -> str:
     ```rust
     {input_code}
     ```
-
     Based on the following past vulnerabilities, analyze and detect security flaws in the given code:
-    
     **Past Vulnerabilities Found in Similar Code:**
     {retrieved_vulnerabilities}
-
     **Provide a structured analysis of potential security risks and mitigation strategies.**
     """.strip()
 
